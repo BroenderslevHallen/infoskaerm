@@ -56,6 +56,14 @@ iframe {
     height: 100%;
 }
 
+/* LOGO NEDERST */
+.logo {
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+    max-height: 80px;
+}
+
 /* HØJRE SIDE – SPONSORER */
 .ads {
     width: 33.33%;
@@ -106,21 +114,6 @@ iframe {
     max-height: 80%;
     object-fit: contain;
 }
-
-/* LOGO NEDERST */
-.logo {
-    position: absolute;
-    bottom: 10px;
-    right: 20px;
-    max-height: 80px;
-}
-
-/* KONFIGURER DATO/KLOKKESLÆT */
-#datetime {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-}
 </style>
 </head>
 
@@ -148,37 +141,3 @@ iframe {
             <div class="slide active">
                 <img src="https://via.placeholder.com/400x200?text=Sponsor+1">
             </div>
-            <div class="slide">
-                <img src="https://via.placeholder.com/400x200?text=Sponsor+2">
-            </div>
-            <div class="slide">
-                <img src="https://via.placeholder.com/400x200?text=Sponsor+3">
-            </div>
-        </div>
-    </div>
-
-</div>
-
-<script>
-// Sponsor slideshow
-const slides = document.querySelectorAll(".slide");
-let index = 0;
-setInterval(() => {
-    slides[index].classList.remove("active");
-    index = (index + 1) % slides.length;
-    slides[index].classList.add("active");
-}, 7000);
-
-// Dato og klokkeslæt
-function updateDateTime() {
-    const now = new Date();
-    const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
-    document.getElementById('date').textContent = now.toLocaleDateString('da-DK', options);
-    document.getElementById('time').textContent = now.toLocaleTimeString('da-DK', { hour: '2-digit', minute: '2-digit' });
-}
-updateDateTime();
-setInterval(updateDateTime, 1000);
-</script>
-
-</body>
-</html>
