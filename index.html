@@ -58,20 +58,20 @@ body {
     font-weight: 600;
 }
 
-/* Bookings-liste container */
+/* Bookings-liste */
 .booking-list {
     padding: 20px 30px;
     overflow-y: auto;
     flex: 1;
 }
 
-.booking-list > div {
-    font-size: 22px;
-    font-weight: 600;
+.booking {
     margin-bottom: 15px;
     padding: 10px 15px;
-    border-left: 5px solid var(--secondary);
     background: #f8f8f8;
+    border-left: 5px solid var(--secondary);
+    font-size: 22px;
+    font-weight: 600;
 }
 
 /* LOGO NEDERST */
@@ -150,7 +150,7 @@ body {
             </div>
         </div>
         <div class="booking-list" id="booking-list">
-            <!-- Conventus-bookinger indsættes her via JS -->
+            <!-- Bookinger indsættes her via JS -->
         </div>
         <img src="https://via.placeholder.com/200x80?text=Logo" alt="Brønderslev Hallerne" class="logo">
     </div>
@@ -174,17 +174,15 @@ body {
 </div>
 
 <script>
-// Conventus JS – indsæt live bookings
-(function(){
-    const container = document.getElementById("booking-list");
-    window.addEventListener('load', function() {
-        // Indsæt Conventus script dynamisk
-        const script = document.createElement("script");
-        script.type = "text/javascript";
-        script.src = "https://www.conventus.dk/dataudv/www/booking_v2_liste.php?forening=8638&vis=0&ressourcer=17028;16989;16996&kategorier=&kun_egne=false&skyggebookinger=true&gruppeAfd=&vis_ressourcemappe=false&columns=skygge;dato;tid;titel;ressource;book&heads=day";
-        document.body.appendChild(script);
-    });
-})();
+// Dato og klokkeslæt
+function updateDateTime() {
+    const now = new Date();
+    const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+    document.getElementById('date').textContent = now.toLocaleDateString('da-DK', options);
+    document.getElementById('time').textContent = now.toLocaleTimeString('da-DK', { hour: '2-digit', minute: '2-digit' });
+}
+updateDateTime();
+setInterval(updateDateTime, 1000);
 
 // Sponsor slideshow
 const slides = document.querySelectorAll(".slide");
@@ -195,15 +193,31 @@ setInterval(() => {
     slides[index].classList.add("active");
 }, 7000);
 
-// Dato og klokkeslæt
-function updateDateTime() {
-    const now = new Date();
-    const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
-    document.getElementById('date').textContent = now.toLocaleDateString('da-DK', options);
-    document.getElementById('time').textContent = now.toLocaleTimeString('da-DK', { hour: '2-digit', minute: '2-digit' });
+// --- LIVE BOOKINGS FRA JSON/CSV ---
+// Erstat dette med Conventus CSV/JSON-link
+const jsonUrl = "link-til-din-Conventus-JSON-eller-CSV";
+
+async function fetchBookings() {
+    try {
+        const response = await fetch(jsonUrl);
+        const data = await response.json(); // eller parse CSV
+        const container = document.getElementById("booking-list");
+        container.innerHTML = "";
+
+        data.forEach(b => {
+            const div = document.createElement("div");
+            div.className = "booking";
+            div.textContent = `${b.tid} – ${b.titel}`;
+            container.appendChild(div);
+        });
+    } catch (err) {
+        console.error("Kunne ikke hente bookings:", err);
+    }
 }
-updateDateTime();
-setInterval(updateDateTime, 1000);
+
+// Hent første gang og opdater hvert 5. minut
+fetchBookings();
+setInterval(fetchBookings, 300000);
 </script>
 
 </body>
