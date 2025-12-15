@@ -4,44 +4,56 @@
 <meta charset="UTF-8">
 <meta http-equiv="refresh" content="300">
 <title>Infoskærm – Brønderslev Hallerne</title>
-
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-    --primary: ##27376b;   /* Mørk blå */
-    --secondary: ##f5804e; /* Orange */
-    --accent: #ffffff;
+    --primary: #27376b;   /* Mørkeblå */
+    --secondary: #f5804e; /* Orange */
+    --background: #f0f0f0;
+    --text: #ffffff;
 }
 
 body {
     margin: 0;
-    font-family: "Segoe UI", Arial, sans-serif;
-    background: var(--secondary);
+    font-family: 'Open Sans', sans-serif;
+    background: var(--background);
 }
 
 .container {
     display: flex;
     height: 100vh;
+    overflow: hidden;
 }
 
-/* VENSTRE SIDE */
+/* VENSTRE SIDE – INFO */
 .info {
     width: 66.66%;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .header {
     background: var(--primary);
-    color: white;
+    color: var(--text);
     padding: 20px 30px;
     font-size: 28px;
+    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#datetime {
+    font-size: 20px;
     font-weight: 600;
 }
 
 iframe {
     flex: 1;
     border: none;
-    background: white;
+    width: 100%;
+    height: 100%;
 }
 
 /* HØJRE SIDE – SPONSORER */
@@ -51,22 +63,28 @@ iframe {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .ads h2 {
-    color: white;
-    margin: 20px 0 10px;
-    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 20px;
+    font-weight: 600;
 }
 
 .slideshow {
-    width: 85%;
+    width: 100%;
     height: 80%;
     position: relative;
-    background: white;
-    border-radius: 16px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    background: var(--background);
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .slide {
@@ -88,6 +106,21 @@ iframe {
     max-height: 80%;
     object-fit: contain;
 }
+
+/* LOGO NEDERST */
+.logo {
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+    max-height: 80px;
+}
+
+/* KONFIGURER DATO/KLOKKESLÆT */
+#datetime {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
 </style>
 </head>
 
@@ -97,8 +130,15 @@ iframe {
 
     <!-- INFO -->
     <div class="info">
-        <div class="header">Hvad sker der i dag?</div>
+        <div class="header">
+            Hvad sker der i dag?
+            <div id="datetime">
+                <span id="date"></span>
+                <span id="time"></span>
+            </div>
+        </div>
         <iframe src="https://www.conventus.dk/dataudv/www/booking_v2_liste_link.php?forening=8638&vis=0&ressourcer=17028;16989;16996&kun_egne=false&skyggebookinger=true&columns=skygge;dato;tid;titel;ressource;book&heads=day"></iframe>
+        <img src="https://via.placeholder.com/200x80?text=Logo" alt="Brønderslev Hallerne" class="logo">
     </div>
 
     <!-- SPONSORER -->
@@ -120,14 +160,24 @@ iframe {
 </div>
 
 <script>
+// Sponsor slideshow
 const slides = document.querySelectorAll(".slide");
 let index = 0;
-
 setInterval(() => {
     slides[index].classList.remove("active");
     index = (index + 1) % slides.length;
     slides[index].classList.add("active");
 }, 7000);
+
+// Dato og klokkeslæt
+function updateDateTime() {
+    const now = new Date();
+    const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+    document.getElementById('date').textContent = now.toLocaleDateString('da-DK', options);
+    document.getElementById('time').textContent = now.toLocaleTimeString('da-DK', { hour: '2-digit', minute: '2-digit' });
+}
+updateDateTime();
+setInterval(updateDateTime, 1000);
 </script>
 
 </body>
