@@ -193,22 +193,30 @@ setInterval(() => {
     slides[index].classList.add("active");
 }, 7000);
 
-// --- LIVE BOOKINGS FRA JSON/CSV ---
-// Erstat dette med Conventus CSV/JSON-link
-const jsonUrl = "link-til-din-Conventus-JSON-eller-CSV";
+// --- LIVE BOOKINGS FRA CSV ---
+// Erstat dette link med Conventus CSV-link
+const csvUrl = "https://www.conventus.dk/dataudv/www/booking_v2_liste_link.php?forening=8638&vis=0&ressourcer=17028;16989;16996&kategorier=&kun_egne=false&skyggebookinger=true&gruppeAfd=&vis_ressourcemappe=false&columns=skygge;dato;tid;titel;ressource;book&heads=day";
 
 async function fetchBookings() {
     try {
-        const response = await fetch(jsonUrl);
-        const data = await response.json(); // eller parse CSV
+        const response = await fetch(csvUrl);
+        const text = await response.text();
+        const lines = text.split("\n").slice(1); // Fjern header
+        const bookings = lines.map(line => {
+            const cols = line.split(";");
+            return { tid: cols[1] + " " + cols[2], titel: cols[3] }; // tilpas efter CSV-struktur
+        });
+
         const container = document.getElementById("booking-list");
         container.innerHTML = "";
 
-        data.forEach(b => {
-            const div = document.createElement("div");
-            div.className = "booking";
-            div.textContent = `${b.tid} – ${b.titel}`;
-            container.appendChild(div);
+        bookings.forEach(b => {
+            if(b.titel) {
+                const div = document.createElement("div");
+                div.className = "booking";
+                div.textContent = `${b.tid} – ${b.titel}`;
+                container.appendChild(div);
+            }
         });
     } catch (err) {
         console.error("Kunne ikke hente bookings:", err);
