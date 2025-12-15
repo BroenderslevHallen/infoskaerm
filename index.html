@@ -31,6 +31,7 @@ body {
     display: flex;
     flex-direction: column;
     position: relative;
+    overflow: hidden; /* Skjuler overflow fra zoom */
 }
 
 .header {
@@ -42,6 +43,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    z-index: 2;
 }
 
 #datetime {
@@ -49,11 +51,14 @@ body {
     font-weight: 600;
 }
 
+/* iframe fylder hele venstre side og zoomes */
 iframe {
     flex: 1;
     border: none;
     width: 100%;
     height: 100%;
+    transform: scale(1.3);       /* Juster tallet for større / mindre tekst */
+    transform-origin: top left;
 }
 
 /* LOGO NEDERST */
@@ -62,6 +67,7 @@ iframe {
     bottom: 10px;
     right: 20px;
     max-height: 60px;
+    z-index: 2;
 }
 
 /* HØJRE SIDE – SPONSORER */
