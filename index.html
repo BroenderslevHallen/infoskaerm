@@ -12,7 +12,16 @@
     --background: #f0f0f0;
     --text: #ffffff;
 }
-
+.logo {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 220px;
+    height: auto;
+    z-index: 9999;
+}
+    
 html, body {
     margin: 0;
     padding: 0;
@@ -95,17 +104,7 @@ html, body {
     max-width: 80%;
     max-height: 80%;
     object-fit: contain;
-}
 
-/* LOGO NEDERST */
-.logo {
-    position: absolute;    /* Absolut i forhold til body */
-    bottom: 20px;          /* Afstand fra bunden af skærmen */
-    left: 50%;             /* Centrer horisontalt */
-    transform: translateX(-50%); /* Flytter logoets midte til midten af skærmen */
-    max-width: 200px;      /* Juster størrelsen efter behov */
-    height: auto;
-    z-index: 1000;         /* Ligger foran baggrund og andre elementer */
 }
 </style>
 </head>
