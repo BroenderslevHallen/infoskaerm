@@ -22,88 +22,43 @@ body {
     display: flex;
     height: 100vh;
     overflow: hidden;
-    position: relative;
 }
 
-/* VENSTRE SIDE – BOOKINGER */
+/* VENSTRE SIDE – CONVENTUS */
 .info {
     width: 66.66%;
-    display: flex;
-    flex-direction: column;
-    background: white;
     position: relative;
-    padding-top: 60px;
-    box-sizing: border-box;
 }
 
-/* Header med dato/klokkeslæt */
-.header {
-    position: absolute;
-    top: 0;
-    left: 0;
+/* iframe fylder hele venstre side */
+.info iframe {
     width: 100%;
-    background: var(--primary);
-    color: var(--text);
-    padding: 15px 30px;
-    font-size: 28px;
-    font-weight: 700;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 2;
+    height: 100%;
+    border: none;
 }
 
-#datetime {
-    font-size: 20px;
-    font-weight: 600;
-}
-
-/* Bookings-liste */
-.booking-list {
-    padding: 20px 30px;
-    overflow-y: auto;
-    flex: 1;
-}
-
-.booking {
-    margin-bottom: 15px;
-    padding: 10px 15px;
-    background: #f8f8f8;
-    border-left: 5px solid var(--secondary);
-    font-size: 22px;
-    font-weight: 600;
-}
-
-/* LOGO NEDERST */
-.logo {
-    position: absolute;
-    bottom: 10px;
-    right: 20px;
-    max-height: 60px;
-    z-index: 2;
-}
-
-/* HØJRE SIDE – SPONSORER */
+/* HØJRE SIDE – SPONSORER + LOGO + DATO */
 .ads {
     width: 33.33%;
     background: var(--primary);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     padding: 20px;
     box-sizing: border-box;
+    position: relative;
 }
 
 .ads h2 {
     color: var(--text);
     margin-bottom: 20px;
     font-weight: 600;
+    text-align: center;
 }
 
 .slideshow {
     width: 100%;
-    height: 85%;
+    height: 70%;
     position: relative;
     background: var(--background);
     border-radius: 12px;
@@ -133,6 +88,26 @@ body {
     max-height: 80%;
     object-fit: contain;
 }
+
+/* Logo nederst */
+.logo {
+    position: absolute;
+    bottom: 20px;
+    max-width: 80%;
+    max-height: 60px;
+}
+
+/* Dato/klokkeslæt øverst */
+.datetime {
+    position: absolute;
+    top: 0;
+    color: var(--text);
+    font-size: 22px;
+    font-weight: 600;
+    text-align: center;
+    width: 100%;
+    padding: 10px 0;
+}
 </style>
 </head>
 
@@ -140,23 +115,14 @@ body {
 
 <div class="container">
 
-    <!-- VENSTRE SIDE -->
+    <!-- VENSTRE SIDE – Conventus -->
     <div class="info">
-        <div class="header">
-            Hvad sker der i dag?
-            <div id="datetime">
-                <span id="date"></span>
-                <span id="time"></span>
-            </div>
-        </div>
-        <div class="booking-list" id="booking-list">
-            <!-- Bookinger indsættes her via JS -->
-        </div>
-        <img src="https://via.placeholder.com/200x80?text=Logo" alt="Brønderslev Hallerne" class="logo">
+        <iframe src="https://www.conventus.dk/dataudv/www/booking_v2_liste_link.php?forening=8638&vis=0&ressourcer=17028;16989;16996&kategorier=&kun_egne=false&skyggebookinger=true&gruppeAfd=&vis_ressourcemappe=false&columns=skygge;dato;tid;titel;ressource;book&heads=day"></iframe>
     </div>
 
-    <!-- HØJRE SIDE -->
+    <!-- HØJRE SIDE – Sponsorer + logo + dato -->
     <div class="ads">
+        <div class="datetime" id="datetime">00:00:00</div>
         <h2>Tak til vores sponsorer</h2>
         <div class="slideshow">
             <div class="slide active">
@@ -169,6 +135,7 @@ body {
                 <img src="https://via.placeholder.com/400x200?text=Sponsor+3">
             </div>
         </div>
+        <img src="https://via.placeholder.com/200x80?text=Logo" alt="Brønderslev Hallerne" class="logo">
     </div>
 
 </div>
@@ -177,9 +144,7 @@ body {
 // Dato og klokkeslæt
 function updateDateTime() {
     const now = new Date();
-    const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
-    document.getElementById('date').textContent = now.toLocaleDateString('da-DK', options);
-    document.getElementById('time').textContent = now.toLocaleTimeString('da-DK', { hour: '2-digit', minute: '2-digit' });
+    document.getElementById('datetime').textContent = now.toLocaleTimeString('da-DK', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
 }
 updateDateTime();
 setInterval(updateDateTime, 1000);
@@ -192,40 +157,6 @@ setInterval(() => {
     index = (index + 1) % slides.length;
     slides[index].classList.add("active");
 }, 7000);
-
-// --- LIVE BOOKINGS FRA CSV ---
-// Erstat dette link med Conventus CSV-link
-const csvUrl = "https://www.conventus.dk/dataudv/www/booking_v2_liste_link.php?forening=8638&vis=0&ressourcer=17028;16989;16996&kategorier=&kun_egne=false&skyggebookinger=true&gruppeAfd=&vis_ressourcemappe=false&columns=skygge;dato;tid;titel;ressource;book&heads=day";
-
-async function fetchBookings() {
-    try {
-        const response = await fetch(csvUrl);
-        const text = await response.text();
-        const lines = text.split("\n").slice(1); // Fjern header
-        const bookings = lines.map(line => {
-            const cols = line.split(";");
-            return { tid: cols[1] + " " + cols[2], titel: cols[3] }; // tilpas efter CSV-struktur
-        });
-
-        const container = document.getElementById("booking-list");
-        container.innerHTML = "";
-
-        bookings.forEach(b => {
-            if(b.titel) {
-                const div = document.createElement("div");
-                div.className = "booking";
-                div.textContent = `${b.tid} – ${b.titel}`;
-                container.appendChild(div);
-            }
-        });
-    } catch (err) {
-        console.error("Kunne ikke hente bookings:", err);
-    }
-}
-
-// Hent første gang og opdater hvert 5. minut
-fetchBookings();
-setInterval(fetchBookings, 300000);
 </script>
 
 </body>
