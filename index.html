@@ -29,18 +29,6 @@ html, body {
 /* VENSTRE SIDE – Conventus infotavle */
 .info {
     width: 66.66%;
-    position: relative;
-}
-
-.info::before {
-    content: "Hvad sker der i dag?";
-    position: absolute;
-    top: 10px;
-    left: 20px;
-    color: var(--primary);
-    font-size: 28px;
-    font-weight: 700;
-    z-index: 10;
 }
 
 .info iframe {
@@ -107,8 +95,8 @@ html, body {
 .datetime {
     position: absolute;
     top: 0;
-    color: var(--text);
-    font-size: 36px; /* større font */
+    color: var(--secondary); /* flot orange farve */
+    font-size: 48px; /* større font */
     font-weight: 700;
     text-align: center;
     width: 100%;
@@ -154,7 +142,7 @@ setInterval(() => {
     slides[index].classList.add("active");
 }, 7000);
 
-// Dato og klokkeslæt (timer og minutter)
+// Dato og klokkeslæt (kun timer og minutter)
 function updateDateTime() {
     const now = new Date();
     document.getElementById('datetime').textContent = now.toLocaleTimeString('da-DK', { hour: '2-digit', minute: '2-digit' });
