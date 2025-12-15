@@ -6,8 +6,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-    --primary: #27376b;   
-    --secondary: #f5804e; 
+    --primary: #27376b;
+    --secondary: #f5804e;
     --background: #f0f0f0;
     --text: #ffffff;
 }
@@ -58,20 +58,20 @@ body {
     font-weight: 600;
 }
 
-/* Bookings-liste */
+/* Bookings-liste container */
 .booking-list {
     padding: 20px 30px;
     overflow-y: auto;
     flex: 1;
 }
 
-.booking {
-    margin-bottom: 15px;
-    padding: 10px 15px;
-    background: #f8f8f8;
-    border-left: 5px solid var(--secondary);
+.booking-list > div {
     font-size: 22px;
     font-weight: 600;
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    border-left: 5px solid var(--secondary);
+    background: #f8f8f8;
 }
 
 /* LOGO NEDERST */
@@ -80,6 +80,7 @@ body {
     bottom: 10px;
     right: 20px;
     max-height: 60px;
+    z-index: 2;
 }
 
 /* HØJRE SIDE – SPONSORER */
@@ -149,7 +150,7 @@ body {
             </div>
         </div>
         <div class="booking-list" id="booking-list">
-            <!-- Bookinger kommer her via JS -->
+            <!-- Conventus-bookinger indsættes her via JS -->
         </div>
         <img src="https://via.placeholder.com/200x80?text=Logo" alt="Brønderslev Hallerne" class="logo">
     </div>
@@ -173,6 +174,18 @@ body {
 </div>
 
 <script>
+// Conventus JS – indsæt live bookings
+(function(){
+    const container = document.getElementById("booking-list");
+    window.addEventListener('load', function() {
+        // Indsæt Conventus script dynamisk
+        const script = document.createElement("script");
+        script.type = "text/javascript";
+        script.src = "https://www.conventus.dk/dataudv/www/booking_v2_liste.php?forening=8638&vis=0&ressourcer=17028;16989;16996&kategorier=&kun_egne=false&skyggebookinger=true&gruppeAfd=&vis_ressourcemappe=false&columns=skygge;dato;tid;titel;ressource;book&heads=day";
+        document.body.appendChild(script);
+    });
+})();
+
 // Sponsor slideshow
 const slides = document.querySelectorAll(".slide");
 let index = 0;
@@ -191,23 +204,6 @@ function updateDateTime() {
 }
 updateDateTime();
 setInterval(updateDateTime, 1000);
-
-// Demo-bookinger (her kan vi senere hente fra JSON/CSV fra Conventus)
-const bookings = [
-    { tid: "09:00-10:00", titel: "Håndbold træning – Hal 1" },
-    { tid: "10:30-11:30", titel: "Floorball – Hal 2" },
-    { tid: "12:00-13:00", titel: "Basket – Hal 1" },
-    { tid: "14:00-15:00", titel: "Yoga – Sal 1" },
-    { tid: "15:30-16:30", titel: "Fodbold – Hal 2" }
-];
-
-const bookingList = document.getElementById("booking-list");
-bookings.forEach(b => {
-    const div = document.createElement("div");
-    div.className = "booking";
-    div.textContent = `${b.tid} – ${b.titel}`;
-    bookingList.appendChild(div);
-});
 </script>
 
 </body>
