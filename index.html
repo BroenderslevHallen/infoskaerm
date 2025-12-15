@@ -2,7 +2,7 @@
 <html lang="da">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="refresh" content="300">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Infoskærm – Brønderslev Hallerne</title>
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
@@ -13,22 +13,22 @@
     --text: #ffffff;
 }
 
-body {
+html, body {
     margin: 0;
+    padding: 0;
+    height: 100%;
     font-family: 'Open Sans', sans-serif;
-    background: var(--background);
+    overflow: hidden;
 }
 
 .container {
     display: flex;
     height: 100vh;
-    overflow: hidden;
 }
 
-/* VENSTRE SIDE – CONVENTUS */
+/* VENSTRE SIDE – Conventus infotavle */
 .info {
     width: 66.66%;
-    position: relative;
 }
 
 .info iframe {
@@ -37,7 +37,7 @@ body {
     border: none;
 }
 
-/* HØJRE SIDE – SPONSORER + LOGO + DATO */
+/* HØJRE SIDE – sponsorer + logo + klokkeslæt */
 .ads {
     width: 33.33%;
     background: var(--primary);
@@ -111,17 +111,16 @@ body {
 }
 </style>
 </head>
-
 <body>
 
 <div class="container">
 
-    <!-- VENSTRE SIDE – Conventus -->
+    <!-- VENSTRE SIDE -->
     <div class="info">
-        <iframe src="https://www.conventus.dk/dataudv/www/booking_v2_liste_link.php?forening=8638&vis=0&ressourcer=17003;17028;16989;16996;17012;17015;17022;17025&kategorier=&kun_egne=false&skyggebookinger=true&gruppeAfd=&layout=relativ&vis_ressourcemappe=false&columns=skygge;dato;tid;titel;ressource;book&heads=day"></iframe>
+        <iframe src="https://www.conventus.dk/dataudv/infosystem/infotavle/infotavle.php?foreningsid=8638&id=636"></iframe>
     </div>
 
-    <!-- HØJRE SIDE – Sponsorer + logo + dato -->
+    <!-- HØJRE SIDE -->
     <div class="ads">
         <div class="datetime" id="datetime">00:00:00</div>
         <h2>Tak til vores sponsorer</h2>
