@@ -7,8 +7,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-    --primary: #27376b;   /* Mørkeblå */
-    --secondary: #f5804e; /* Orange */
+    --primary: #27376b;   
+    --secondary: #f5804e; 
     --background: #f0f0f0;
     --text: #ffffff;
 }
@@ -23,45 +23,58 @@ body {
     display: flex;
     height: 100vh;
     overflow: hidden;
+    position: relative;
 }
 
 /* VENSTRE SIDE – INFO */
 .info {
     width: 66.66%;
-    display: flex;
-    flex-direction: column;
     position: relative;
+    background: white;
+    overflow: hidden;
 }
 
+/* Header med dato/klokkeslæt */
 .header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
     background: var(--primary);
     color: var(--text);
-    padding: 10px 30px;
-    font-size: 24px;
+    padding: 15px 30px;
+    font-size: 28px;
     font-weight: 700;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    z-index: 2;
 }
 
 #datetime {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 600;
 }
 
+/* Conventus iframe zoom */
 iframe {
-    flex: 1;
-    border: none;
+    position: absolute;
+    top: 60px;   /* Lidt under header */
+    left: 0;
     width: 100%;
-    height: 100%;
+    height: calc(100% - 60px);
+    border: none;
+    transform: scale(1.3);
+    transform-origin: top left;
 }
 
-/* LOGO NEDERST */
+/* Logo nederst */
 .logo {
     position: absolute;
     bottom: 10px;
     right: 20px;
     max-height: 60px;
+    z-index: 2;
 }
 
 /* HØJRE SIDE – SPONSORER */
@@ -121,7 +134,7 @@ iframe {
 
 <div class="container">
 
-    <!-- INFO -->
+    <!-- VENSTRE SIDE -->
     <div class="info">
         <div class="header">
             Hvad sker der i dag?
@@ -130,4 +143,38 @@ iframe {
                 <span id="time"></span>
             </div>
         </div>
-        <iframe src="https://www.conventus.dk/dataudv/www/booking_v2_liste_link.php?forening=8638&vi_
+        <iframe src="https://www.conventus.dk/dataudv/www/booking_v2_liste_link.php?forening=8638&vis=0&ressourcer=17028;16989;16996&kun_egne=false&skyggebookinger=true&columns=skygge;dato;tid;titel;ressource;book&heads=day"></iframe>
+        <img src="https://via.placeholder.com/200x80?text=Logo" alt="Brønderslev Hallerne" class="logo">
+    </div>
+
+    <!-- HØJRE SIDE -->
+    <div class="ads">
+        <h2>Tak til vores sponsorer</h2>
+        <div class="slideshow">
+            <div class="slide active">
+                <img src="https://via.placeholder.com/400x200?text=Sponsor+1">
+            </div>
+            <div class="slide">
+                <img src="https://via.placeholder.com/400x200?text=Sponsor+2">
+            </div>
+            <div class="slide">
+                <img src="https://via.placeholder.com/400x200?text=Sponsor+3">
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+// Sponsor slideshow
+const slides = document.querySelectorAll(".slide");
+let index = 0;
+setInterval(() => {
+    slides[index].classList.remove("active");
+    index = (index + 1) % slides.length;
+    slides[index].classList.add("active");
+}, 7000);
+
+// Dato og klokkeslæt
+function updateDateTime() {
+    const now = new Date();
