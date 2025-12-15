@@ -99,13 +99,13 @@ html, body {
 
 /* LOGO NEDERST */
 .logo {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    max-width: 50%; /* Juster efter hvor stort logoet skal være */
+    position: absolute;    /* Absolut i forhold til body */
+    bottom: 20px;          /* Afstand fra bunden af skærmen */
+    left: 50%;             /* Centrer horisontalt */
+    transform: translateX(-50%); /* Flytter logoets midte til midten af skærmen */
+    max-width: 200px;      /* Juster størrelsen efter behov */
     height: auto;
-    z-index: 1000; /* Sørger for, at logoet ligger foran alt andet */
+    z-index: 1000;         /* Ligger foran baggrund og andre elementer */
 }
 </style>
 </head>
