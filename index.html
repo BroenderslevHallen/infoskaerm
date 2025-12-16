@@ -7,58 +7,68 @@
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-    --primary: #27376b;   /* mørkeblå */
-    --secondary: #ffffff; /* hvid */
-    --background: #ffffff;
+    --primary: #002143;   /* mørkeblå */
+    --secondary: #f5804e; /* orange */
+    --background: #ffffff; /* hvid indeni rammen */
     --text: #ffffff;
 }
-.logo {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    max-width: 300px;
-    height: auto;
-    z-index: 9999;
+
+/* ------------------- SKÆRM WRAPPER ------------------- */
+.screen-wrapper {
+    background-color: var(--background);
+    border: 15px solid var(--primary);
+    border-radius: 12px;
+    padding: 10px;
+    box-sizing: border-box;
+    width: 98vw;
+    height: 98vh;
+    margin: auto;
+    position: relative;
+    overflow: hidden;
 }
-    
+
+/* ------------------- BODY ------------------- */
 html, body {
     margin: 0;
     padding: 0;
     height: 100%;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Open Sans', sans-serif;
     overflow: hidden;
 }
 
+/* ------------------- CONTAINER ------------------- */
 .container {
     display: flex;
-    height: 100vh;
+    height: 100%;
 }
 
-/* VENSTRE SIDE – Conventus infotavle */
+/* ------------------- VENSTRE SIDE – INFOTAVLE ------------------- */
 .info {
-    width: 60.00%;
+    width: 66.66%;
+    display: flex;
+    flex-direction: column;
+}
+
+.infotitle {
+    margin: 0 0 10px 0;
+    padding: 10px;
+    font-size: 48px;
+    font-weight: 700;
+    text-align: center;
+    color: var(--primary);
+    background: #ffffff; /* hvid baggrund i overskrift */
+    border-radius: 6px;
 }
 
 .info iframe {
     width: 100%;
-    height: 100%;
+    flex: 1;
     border: none;
 }
-    .infotitle {
-    margin: 0;
-    padding: 10px;
-    background: #27376b;
-    color: #ffffff;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 48px;
-    font-weight: 700;
-    text-align: center;
-}
 
-/* HØJRE SIDE – sponsorer + logo + klokkeslæt */
+/* ------------------- HØJRE SIDE – SPONSORER & KLOKKESLÆT ------------------- */
 .ads {
-    width: 40.00%;
+    width: 33.33%;
     background: var(--primary);
     display: flex;
     flex-direction: column;
@@ -69,31 +79,26 @@ html, body {
     position: relative;
 }
 
-/* Klokkeslæt øverst */
+/* Klokkeslæt */
 .datetime {
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    color: var(--secondary);
-    font-size: 48px; /* stor og tydelig */
+    font-size: 48px;
     font-weight: 700;
+    color: var(--secondary);
     text-align: center;
-    z-index: 1000; /* ligger foran alt andet */
+    margin-bottom: 20px;
 }
 
+/* Slideshow */
 .slideshow {
     width: 100%;
     height: 80%;
     position: relative;
-    background: var(--background);
     border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 70px; /* giver plads til klokkeslæt */
+    background: #f0f0f0;
 }
 
 .slide {
@@ -114,57 +119,66 @@ html, body {
     max-width: 80%;
     max-height: 80%;
     object-fit: contain;
+}
 
+/* ------------------- LOGO NEDERST ------------------- */
+.logo {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 220px;
+    height: auto;
+    z-index: 9999;
 }
 </style>
 </head>
 <body>
 
-<div class="container">
+<div class="screen-wrapper">
+    <div class="container">
 
-    <!-- VENSTRE SIDE -->
-   <div class="info">
-    <h1 class="infotitle">Hvad sker der i dag?</h1>
+        <!-- VENSTRE SIDE -->
+        <div class="info">
+            <h1 class="infotitle">Hvad sker der i dag?</h1>
+            <iframe src="https://www.conventus.dk/dataudv/infosystem/infotavle/infotavle_v2.php?foreningsid=8638&id=1087" frameborder="0"></iframe>
+        </div>
 
-    <iframe 
-        src="https://www.conventus.dk/dataudv/infosystem/infotavle/infotavle_v2.php?foreningsid=8638&id=1087"
-        frameborder="0">
-    </iframe>
-</div>
-
-    <!-- HØJRE SIDE -->
-    <div class="ads">
-        <div class="datetime" id="datetime">00:00</div>
-        <div class="slideshow">
-            <div class="slide active">
-                <img src="https://raw.githubusercontent.com/BroenderslevHallen/infoskaerm/refs/heads/main/2.png">
-            </div>
-            <div class="slide">
-                <img src="https://raw.githubusercontent.com/BroenderslevHallen/infoskaerm/refs/heads/main/3.png">
-            </div>
-            <div class="slide">
-                <img src="https://raw.githubusercontent.com/BroenderslevHallen/infoskaerm/refs/heads/main/9.png">
-            </div>
-            <div class="slide">
-                <img src="https://raw.githubusercontent.com/BroenderslevHallen/infoskaerm/refs/heads/main/6.png">
-            </div>
-            <div class="slide">
-                <img src="https://raw.githubusercontent.com/BroenderslevHallen/infoskaerm/refs/heads/main/5.png">
-            </div>
-            <div class="slide">
-                <img src="https://raw.githubusercontent.com/BroenderslevHallen/infoskaerm/refs/heads/main/4.png">
-            </div>
-            <div class="slide">
-                <img src="https://raw.githubusercontent.com/BroenderslevHallen/infoskaerm/refs/heads/main/1.png">
-            </div>
-            <div class="slide">
-                <img src="https://raw.githubusercontent.com/BroenderslevHallen/infoskaerm/refs/heads/main/7.png"> 
-            </div>
-            <div class="slide">
-                <img src="https://raw.githubusercontent.com/BroenderslevHallen/infoskaerm/refs/heads/main/8.png"> 
+        <!-- HØJRE SIDE -->
+        <div class="ads">
+            <div class="datetime" id="datetime">00:00</div>
+            <div class="slideshow">
+                <div class="slide active">
+                    <img src="https://raw.githubusercontent.com/BroenderslevHallen/infoskaerm/refs/heads/main/Broenderslev_Elektro%20gruppen.png">
+                </div>
+                <div class="slide">
+                    <img src="https://raw.githubusercontent.com/BroenderslevHallen/infoskaerm/refs/heads/main/Guldsmed%20hansen.png">
+                </div>
+                <div class="slide">
+                    <img src="https://raw.githubusercontent.com/BroenderslevHallen/infoskaerm/refs/heads/main/KN-L%C3%A5seteknik%20636x356.jpg">
+                </div>
+                <div class="slide">
+                    <img src="https://raw.githubusercontent.com/BroenderslevHallen/infoskaerm/refs/heads/main/MJ-BYG-logo.webp">
+                </div>
+                <div class="slide">
+                    <img src="https://raw.githubusercontent.com/BroenderslevHallen/infoskaerm/refs/heads/main/NIH-logo-sort-skrift.png">
+                </div>
+                <div class="slide">
+                    <img src="https://raw.githubusercontent.com/BroenderslevHallen/infoskaerm/refs/heads/main/Nybolig%20logo.png">
+                </div>
+                <div class="slide">
+                    <img src="https://raw.githubusercontent.com/BroenderslevHallen/infoskaerm/refs/heads/main/garant%20br%C3%B8nderslev.jpg">
+                </div>
+                <div class="slide">
+                    <img src="https://raw.githubusercontent.com/BroenderslevHallen/infoskaerm/refs/heads/main/mariendal.png">
+                </div>
             </div>
         </div>
 
+    </div>
+
+    <!-- Logo nederst -->
+    <img src="https://raw.githubusercontent.com/BroenderslevHallen/infoskaerm/refs/heads/main/Hvid%20uden%20baggrund.png" alt="Brønderslev Hallerne" class="logo">
 </div>
 
 <script>
@@ -186,8 +200,5 @@ updateDateTime();
 setInterval(updateDateTime, 1000);
 </script>
 
-<img src="https://raw.githubusercontent.com/BroenderslevHallen/infoskaerm/refs/heads/main/Hvid%20uden%20baggrund.png"
-     alt="Brønderslev Hallerne"
-     class="logo">    
-</body>  
+</body>
 </html>
