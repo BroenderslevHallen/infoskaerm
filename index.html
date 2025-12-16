@@ -15,10 +15,9 @@
 
 /* ------------------- SKÆRM WRAPPER ------------------- */
 .screen-wrapper {
-    background-color: var(--background);
-    border: 15px solid var(--primary);
-    border-radius: 12px;
-    padding: 10px;
+    width: 99vw;              /* næsten hele skærmen */
+    height: 99vh;
+    padding: 20px 20px 40px;  /* TOP / SIDER / BUND */
     box-sizing: border-box;
     width: 98vw;
     height: 98vh;
@@ -44,7 +43,7 @@ html, body {
 
 /* ------------------- VENSTRE SIDE – INFOTAVLE ------------------- */
 .info {
-    width: 66.66%;
+    width: 60.00%;
     display: flex;
     flex-direction: column;
 }
@@ -68,7 +67,7 @@ html, body {
 
 /* ------------------- HØJRE SIDE – SPONSORER & KLOKKESLÆT ------------------- */
 .ads {
-    width: 33.33%;
+    width: 40.00%;
     background: var(--secondary);
     display: flex;
     flex-direction: column;
@@ -83,7 +82,7 @@ html, body {
 .datetime {
     font-size: 48px;
     font-weight: 700;
-    color: var(--secondary);
+    color: var(--primary);
     text-align: center;
     margin-bottom: 20px;
 }
