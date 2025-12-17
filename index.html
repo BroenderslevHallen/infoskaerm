@@ -184,21 +184,19 @@ setInterval(() => {
 }, 7000);
 
 // Dato og klokkeslæt (kun timer og minutter)
-<script>
-function updateDateTime() {
-    const now = new Date();
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-
-    const clock = document.getElementById('datetime');
-    if (clock) {
-        clock.textContent = hours + ":" + minutes;
-    }
-}
-
 document.addEventListener("DOMContentLoaded", function () {
-    updateDateTime();
-    setInterval(updateDateTime, 1000);
+    function updateDateTime() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const clock = document.getElementById('datetime');
+        if(clock) {
+            clock.textContent = hours + ":" + minutes;
+        }
+    }
+
+    updateDateTime();               // opdater straks
+    setInterval(updateDateTime, 1000); // opdater hvert sekund
 });
 </script>
 
