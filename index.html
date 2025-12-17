@@ -199,10 +199,14 @@ setInterval(() => {
 }, 7000);
 
 // Dato og klokkeslæt (kun timer og minutter)
+<script>
 function updateDateTime() {
     const now = new Date();
-    document.getElementById('datetime').textContent = now.toLocaleTimeString('da-DK', { hour: '2-digit', minute: '2-digit' });
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    document.getElementById('datetime').textContent = `${hours}:${minutes}`;
 }
+
 updateDateTime();
 setInterval(updateDateTime, 1000);
 </script>
